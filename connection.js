@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');//first of all you must install bluebird in your system :- npm install bluebird --save
 
-// ES6 Promises
-mongoose.Promise = global.Promise;//(optinal)this line you have to write only when your programm needs Promise
-
-    // Connect to mongodb
-    mongoose.connect('mongodb://localhost/testaroo');
-    mongoose.connection.once('open', function(){
-        console.log('Connection has been made, now make fireworks...');
-    }).on('error', function(error){
-        console.log('Connection error:', error);
+// Connect to latest version mongoose mongodb
+   const connect =  mongoose.connect('mongodb://localhost/testaroo',{
+   useMongoClient: true,
+   });
+      // Connect to mongodb
+    connect.then((db) => {
+      console.log("Connected correctly to mongodb server");
+    },(err) => { console.log(err);
     });
-
